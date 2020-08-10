@@ -6,7 +6,7 @@ let words = [
     "pancake",
     "python",
     "visualbasic",
-    "csharp"
+    "csharp",
     "algorithm",
     "compiler",
 ];
@@ -14,21 +14,41 @@ let words = [
 let maxGuesses = 7; // max tries = how many failed guesses
 
 let guessedLetters = []; // store array unique letters guessed
-let word; // index to store randomly selected word in array
+let word = ""; // index to store randomly selected word in array
 let guessingWord = []; // array that stores guessed letters
-let remainingGuesses = 0; // tries left
-let gameStarted = false; // to tell if game has started
+let remainingGuesses = 7; // tries left
 let hasFinished = false; // for 'press any key to try again'
 let wins = 0; // how many wins
+
+
+    word = words[Math.floor(Math.random() * words.length)];
+    let array = word.split('');
+    console.log(array);
+
+    let tableau = [];
+    tableau = array.map(element => element = "_");
+    console.log(tableau);
+    document.getElementById('currentWord').innerHTML= tableau.join('');
+
+
+    /*
+let letter = addEventListener(onkeydown)...
+function compare() {
+    //loop array
+    // if array[i] = letter;
+    // tableau[i] = letter;
+}
+*/
 
 
 // reset game-level variables
 function resetGame() {
     remainingGuesses = maxGuesses; // reset number of remaining tries
-    gameStarted = false;
 
     // pick a random word from array
     let word = words[Math.floor(Math.random() * words.length)];
+    let array = word.split(" ");
+    console.log(array);
 
     // clear out arrays
     guessedLetters = [];
@@ -51,20 +71,20 @@ function resetGame() {
     updateDisplay();
 };
 
+
 // update the display on HTML page
 function updateDisplay() {
     document.getElementById("totalWins").innerText = wins;
-    document.getElementById('currentWord').innerText = "";
+
+    let guessingWordText = "";
+
     for (let i = 0; i < guessingWord.length; i ++) {
-        document.getElementById('currentWord').innerText += guessingWord[i];
+        guessingWordText += guessingWord[i];
     }
-    document.getElementById('remainingGuesses').innertText = remainingGuesses;
-    document.getElementById('guessedLetters').innerText = guessedLetters;
-    if (remainingLetters <= 0) {
-        document.getElementById('gameover-image').style.cssText = "display: block";
-        document.getElementById('pressKeyTryAgain').style.cssText = "display: block";
-        hasFinished = true;
-    }
+
+    document.getElementById('currentWord').innerHTML = guessingWordText;
+    document.getElementById('remainingGuesses').innertHTML = remainingGuesses;
+    document.getElementById('guessedLetters').innerHTML = guessedLetters;
 };
 
 // update hanging image depending on number of guesses
@@ -72,8 +92,8 @@ function updateHangmanImage() {
     document.getElementById('hangman-image').src = "assets/img/" + (maxGuesses - remainingGuesses) + ".jpg";
 };
 
-// Input on key event listener
-document.onkeydown = function(event) {
+// event listener on key
+document.addEventListener("onkeydown", function(event){
     if (hasFinished) {
         resetGame();
         hasFinished = false; // allow to restart the game
@@ -81,26 +101,27 @@ document.onkeydown = function(event) {
         // check if a-z pressed
         if (event.keycode >= 65 && event.keyCode <= 90) {
             makeGuess(event.key.toLowerCase()); // force lowercase input
+            updateDisplay();
+            checkWin();
+            checkLoss();
         }
     }
-};
+});
 
-// allow guesses function
+// make guesses function
 function makeGuess(letter) {
     if (remainingGuesses > 0) { // check if remaining guesses
-        if (!gameStarted) {
-            gameStarted = true;
-        }
 
+        /* REPLACE BY LOOP */
         // verify if already used letter, search in guessedLetters Array
         if (guessedLetters.indexOf(letter) === -1) { // if retuns -1 -> not in array -> push
             guessedLetters.push(letter);
             evaluateGuess(letter); // pass letter to evaluateGuess
+        }
     }
-    
-    updateDisplay();
-    checkWin();
-}
+
+};
+
 
 // search in word for all instances in the string and replace in guess word
 function evaluateGuess(letter) {
@@ -135,7 +156,14 @@ function checkWin() {
         hasFinished = true;
     }
 };
-
+ // chacking for a loss
+function checkLoss() {
+    if (remainingGuesses <= 0) {
+        document.getElementById('gameover-image').style.cssText = 'display: block';
+        document.getElementById('pressKeyTryAgain').style.cssText = 'display: block';
+        hasFinished = true;
+    }
+}
 
 
 /*
