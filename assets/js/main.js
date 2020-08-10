@@ -76,7 +76,7 @@ function updateHangmanImage() {
 document.onkeydown = function(event) {
     if (hasFinished) {
         resetGame();
-        hasFinished = false;
+        hasFinished = false; // allow to restart the game
     } else {
         // check if a-z pressed
         if (event.keycode >= 65 && event.keyCode <= 90) {
@@ -84,6 +84,58 @@ document.onkeydown = function(event) {
         }
     }
 };
+
+// allow guesses function
+function makeGuess(letter) {
+    if (remainingGuesses > 0) { // check if remaining guesses
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+
+        // verify if already used letter, search in guessedLetters Array
+        if (guessedLetters.indexOf(letter) === -1) { // if retuns -1 -> not in array -> push
+            guessedLetters.push(letter);
+            evaluateGuess(letter); // pass letter to evaluateGuess
+    }
+    
+    updateDisplay();
+    checkWin();
+}
+
+// search in word for all instances in the string and replace in guess word
+function evaluateGuess(letter) {
+    // array to store positions of letters in string
+    let positions = [];
+
+    // loop through word
+    for (let i = 0; i < word.length; i++) {
+        if (word[i] === letter) { // find instances
+            positions.push(i); // store in array
+        }
+    }
+
+    // if no indicies
+    if (positions.length <= 0) {
+        remainingGuesses --; // decrement guesses
+        updateHangmanImage(); // update hanging image
+    } else  {
+        // loop through indicies and replace '_' with letter
+        for (let i = 0; i < positions.length; i ++) {
+            guessingWord[positions[i]] = letter;
+        }
+    }
+};
+
+// checking for a win
+function checkWin() {
+    if (guessingWord.indexOf("_") === 1) {
+        document.getElementById("win-image").style.cssText = "displa: block";
+        document.getElementById("pressKeyTryAgain").style.cssText = "displa: block";
+        wins ++;
+        hasFinished = true;
+    }
+};
+
 
 
 /*
