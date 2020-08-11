@@ -28,7 +28,7 @@ function generateButtons() {
     let buttonHTML = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter =>
         `
         <button
-        class="btn btn-md btn-primary m-1"
+        class="btn btn-md btn-outline-primary m-1"
         id='` + letter + `'
         onclick="handleGuess('` + letter + `')"
         >
@@ -110,3 +110,5 @@ function reset() {
     updateMistakes();
     generateButtons();
 }
+
+console.log(answer);
