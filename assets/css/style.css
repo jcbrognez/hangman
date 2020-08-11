@@ -5,51 +5,40 @@
           box-sizing: border-box;
 }
 
-body {
-  background-color: #eee;
-  padding-top: 10px;
-  font-family: Courier New, Courier, monospace;
+h1 {
+  margin-top: 5px;
+}
+
+.guesses {
+  text-align: right;
+}
+
+.image {
+  text-align: center;
+  margin: 20px 0 30px 0;
+}
+
+#keyboard {
+  text-align: center;
+  margin: 15px auto;
+  width: 70%;
+}
+
+.btn {
   color: white;
-  text-shadow: 0 0 2px black, -1px -1px 2px black, 1px 0 2px black, 1px 1px 2px black;
-  background: url("../images/bgimage.jpg") no-repeat;
-  background-size: cover;
+  background-color: #c4bd68;
+  border: none;
 }
 
-.container {
-  text-align: center;
+.btn:hover {
+  background-color: #a89e10;
 }
 
-h1, h2, h3,
-h4, h5, h6 {
-  padding: 5px;
-  background-color: rgba(101, 155, 242, 0.2);
+.btn:active {
+  border: none;
 }
 
-#title-image, #gameover-image, #win-image {
-  display: block;
-  margin: 0 auto;
-}
-
-#title-image {
-  width: 50%;
-}
-
-#currentWord {
-  letter-spacing: 10px;
-}
-
-#pressKeyTryAgain,
-#gameover-image,
-#win-image {
-  display: none;
-}
-
-.gameplay-column {
-  padding-top: 20px;
-  border: 3px dashed #fff;
-  text-align: center;
-  margin-top: 20px;
-  min-height: 500px;
-  background-color: rgba(255, 255, 255, 0.3);
+.btn:visited {
+  background-color: #c4c1a2;
 }
 /*# sourceMappingURL=style.css.map */
