@@ -1,4 +1,4 @@
-# hangman
+# Hangman game
 
 ![hangman Storytelling](./hangman.jpg)
 
